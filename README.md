@@ -145,16 +145,6 @@ Um `Makefile` foi configurado para simplificar as tarefas comuns.
 
 Este projeto foi idealizado e desenvolvido por:
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/paulonc">
-        <img src="https://avatars.githubusercontent.com/u/94625698?v=4" width="120px" style="border-radius:50%;" alt="Paulo Victor"/>
-        <br />
-        <sub><b>Paulo Victor</b></sub>
-      </a>
-      <br />
-      🚀 Creator & Maintainer
-    </td>
-  </tr>
-</table>
+| [<img src="https://avatars.githubusercontent.com/u/94625698?v=4?s=100" width="100"/>](https://github.com/paulonc) |
+|---|
+| **Paulo Victor**|
