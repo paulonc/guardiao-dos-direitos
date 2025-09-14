@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from core.retriever import SemanticRetriever
 from .state import AgentState
@@ -12,6 +12,67 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.0,
     google_api_key=os.getenv("GOOGLE_API_KEY")
 )
+
+def supervisor_agent(state: AgentState):
+    print("---NODE: SUPERVISOR---")
+    question = state["question"]
+    prompt = ChatPromptTemplate.from_template(
+        """Você é um supervisor de um sistema de IA. Sua função é analisar a pergunta do usuário e 
+        classificá-la em uma das seguintes categorias:
+
+        1.  `pergunta_sobre_previdencia`: A pergunta é específica sobre Direito Previdenciário, 
+            benefícios, aposentadoria, INSS, contribuições, pensão por morte, auxílio-doença, etc.
+        2.  `meta_pergunta`: A pergunta é sobre o próprio assistente (ex: "quem é você?", "o que você faz?").
+        3.  `saudacao`: O usuário está apenas dizendo "oi", "olá", "bom dia", etc.
+        4.  `fora_de_topico`: A pergunta é sobre qualquer outro assunto que não seja Direito Previdenciário.
+
+        Pergunta do Usuário: "{question}"
+
+        Retorne um JSON com a chave "category" e o valor sendo a categoria escolhida.
+        Exemplo: {{"category": "pergunta_sobre_previdencia"}}
+        """
+    )
+    chain = prompt | llm | JsonOutputParser()
+    result = chain.invoke({"question": question})
+    category = result.get("category", "fora_de_topico")
+    print(f"Categoria da pergunta: {category}")
+    return {"category": category}
+
+def off_topic_agent(state: AgentState):
+    print("---NODE: OFF-TOPIC---")
+    prompt = ChatPromptTemplate.from_template(
+        """Você é o Guardião Dos Direitos.
+        O usuário perguntou sobre algo fora do tema do Direito Previdenciário.
+        Recuse educadamente, explicando que você só responde perguntas relacionadas ao Direito Previdenciário,
+        e convide-o a perguntar algo dentro do tema."""
+    )
+    chain = prompt | llm | StrOutputParser()
+    generation = chain.invoke({})
+    return {"final_answer": generation}
+
+def meta_agent(state: AgentState):
+    print("---NODE: META---")
+    prompt = ChatPromptTemplate.from_template(
+        """Você é o Guardião Previdenciário.
+        O usuário está perguntando sobre você (quem é você, o que faz, etc.).
+        Explique sua função de maneira clara e envolvente: você é um assistente de IA
+        especializado em responder perguntas sobre Direito Previdenciário,
+        usando leis, normas e informações oficiais como base."""
+    )
+    chain = prompt | llm | StrOutputParser()
+    generation = chain.invoke({})
+    return {"final_answer": generation}
+
+def greeting_agent(state: AgentState):
+    print("---NODE: GREETING---")
+    prompt = ChatPromptTemplate.from_template(
+        """Você é o Guardião Dos Direitos, um assistente amigável e educado.
+        O usuário está apenas cumprimentando. 
+        Responda de forma simpática e acolhedora, convidando-o a fazer perguntas sobre Direito Previdenciário."""
+    )
+    chain = prompt | llm | StrOutputParser()
+    generation = chain.invoke({})
+    return {"final_answer": generation}
 
 def query_transformer_agent(state):
     print("---NODE: QUERY TRANSFORMER---")
@@ -111,24 +172,24 @@ def self_check_agent(state: AgentState):
     
     if "A informação solicitada não foi encontrada" in answer:
         print("Resposta indica que não há informação. Verificação passou.")
-        return {"checked_answer": answer}
+        return {"final_answer": answer}
 
     if answer and "(Fonte:" in answer:
         print("Verificação básica passou: resposta contém citações.")
-        return {"checked_answer": answer}
+        return {"final_answer": answer}
     else:
         print("Verificação falhou: resposta sem citações. Retornando resposta padrão.")
         return {
-            "checked_answer": "A resposta gerada não pôde ser validada com as fontes. A informação pode não estar presente nos documentos indexados."
+            "final_answer": "A resposta gerada não pôde ser validada com as fontes. A informação pode não estar presente nos documentos indexados."
         }
 
 
 def safety_policy_agent(state: AgentState):
     print("---(NÓ: SAFETY/POLICY)---")
-    checked_answer = state["checked_answer"]
+    final_answer = state["final_answer"]
     
-    disclaimer = "\n\n**Aviso Legal:** Esta resposta é gerada por uma inteligência artificial e baseia-se nos documentos fornecidos. Não constitui aconselhamento jurídico. Consulte sempre um profissional qualificado ou as fontes oficiais do governo para tomar decisões."
+    disclaimer = "\n\n**⚠️ Aviso Legal:** Esta resposta é gerada por uma inteligência artificial e baseia-se nos documentos fornecidos. Não constitui aconselhamento jurídico. Consulte sempre um profissional qualificado ou as fontes oficiais do governo para tomar decisões."
     
-    final_answer = checked_answer + disclaimer
+    final_answer = final_answer + disclaimer
     
-    return {"checked_answer": final_answer}
+    return {"final_answer": final_answer}
