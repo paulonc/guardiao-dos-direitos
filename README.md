@@ -1,7 +1,7 @@
 # Guardião dos Direitos ⚖️
 
 <div align="center">
-  <img src="img/logo.png" alt="Guardião dos Direitos Logo" width="400"/>
+  <img src="docs/logo.png" alt="Guardião dos Direitos Logo" width="400"/>
 </div>
 
 ---
