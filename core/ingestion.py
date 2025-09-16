@@ -14,7 +14,7 @@ SOURCE_DOCS_PATH = "data/source_docs"
 VECTOR_STORE_PATH = "data/vector_store"
 EMBEDDING_MODEL = "thenlper/gte-small"
 CHUNK_SIZE = 2000
-CHUNK_OVERLAP = 400
+CHUNK_OVERLAP = 300
 
 def get_document_loaders():
     print("🔎 Configurando carregadores de documentos...")

@@ -53,7 +53,7 @@ def off_topic_agent(state: AgentState):
 def meta_agent(state: AgentState):
     print("---NODE: META---")
     prompt = ChatPromptTemplate.from_template(
-        """Você é o Guardião Previdenciário.
+        """Você é o Guardião Dos Direitos.
         O usuário está perguntando sobre você (quem é você, o que faz, etc.).
         Explique sua função de maneira clara e envolvente: você é um assistente de IA
         especializado em responder perguntas sobre Direito Previdenciário,
