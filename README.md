@@ -12,7 +12,7 @@ O Guardião dos Direitos não é apenas mais um chatbot. É um sistema de **Gera
 
 ---
 
-## ## ✨ Principais Funcionalidades
+## ✨ Principais Funcionalidades
 
 -   **🧠 Roteamento Inteligente com Agente Supervisor**: O sistema primeiro analisa a intenção do usuário. Perguntas sobre o tema são enviadas ao pipeline de RAG, enquanto saudações, meta-perguntas ou tópicos não relacionados são tratados por agentes especializados, tornando a interação mais natural e eficiente.
 -   **🎯 Recuperação de Alta Precisão (Retrieval de 2 Estágios)**: Para garantir que as respostas sejam baseadas nos trechos mais relevantes, utilizamos uma abordagem de duas fases:
@@ -23,7 +23,7 @@ O Guardião dos Direitos não é apenas mais um chatbot. É um sistema de **Gera
 
 ---
 
-## ## 🚀 Arquitetura e Tecnologias
+## 🚀 Arquitetura e Tecnologias
 
 O coração do Guardião é um grafo computacional gerenciado pelo **LangGraph**, que orquestra a colaboração entre diferentes agentes especializados.
 
@@ -45,7 +45,7 @@ O coração do Guardião é um grafo computacional gerenciado pelo **LangGraph**
 
 ---
 
-## ## ⚙️ Como Executar o Projeto
+## ⚙️ Como Executar o Projeto
 
 Siga os passos abaixo para configurar e rodar o Guardião dos Direitos em seu ambiente.
 
@@ -123,7 +123,7 @@ Siga os passos abaixo para configurar e rodar o Guardião dos Direitos em seu am
 
 ---
 
-## ## 📜 Comandos do Makefile
+## 📜 Comandos do Makefile
 
 Um `Makefile` foi configurado para simplificar as tarefas comuns.
 
