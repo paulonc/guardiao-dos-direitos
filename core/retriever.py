@@ -7,7 +7,6 @@ from typing import List, Dict, Any, Optional
 import numpy as np
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_community.retrievers import BM25Retriever
 from langchain.schema import Document
 from sentence_transformers.cross_encoder import CrossEncoder
 from functools import lru_cache
@@ -46,15 +45,12 @@ class SemanticRetriever:
         vector_store_path: str = VECTOR_STORE_PATH,
         embedding_model: str = EMBEDDING_MODEL,
         reranker_model: str = RERANKER_MODEL,
-        use_hybrid: bool = False,
     ):
         self.vector_store_path = vector_store_path
         self.embedding_model = embedding_model
         self.reranker_model = reranker_model
-        self.use_hybrid = use_hybrid
 
         self._vector_store = None
-        self._bm25 = None
 
     @property
     def embeddings(self):
@@ -70,13 +66,6 @@ class SemanticRetriever:
                 allow_dangerous_deserialization=True,
             )
         return self._vector_store
-
-    @property
-    def bm25(self):
-        if self._bm25 is None and self.use_hybrid:
-            logger.info("Carregando BM25 retriever para busca híbrida...")
-            self._bm25 = BM25Retriever.from_documents(self.vector_store.docstore._dict.values())
-        return self._bm25
 
     @property
     def reranker(self):
@@ -97,11 +86,6 @@ class SemanticRetriever:
 
         candidate_docs = faiss_docs
 
-        if self.use_hybrid and self.bm25:
-            logger.info("Fase 2: adicionando candidatos do BM25...")
-            bm25_docs = self.bm25.get_relevant_documents(query)[:k_retriever]
-            candidate_docs.extend(bm25_docs)
-
         if not candidate_docs:
             logger.warning("Nenhum documento encontrado.")
             return [
@@ -113,7 +97,7 @@ class SemanticRetriever:
                 )
             ]
 
-        logger.info(f"Fase 3: reranqueando {len(candidate_docs)} candidatos com {self.reranker_model}...")
+        logger.info(f"Fase 2: reranqueando {len(candidate_docs)} candidatos com {self.reranker_model}...")
         pairs = [[query, doc.page_content] for doc in candidate_docs]
         scores = self.reranker.predict(pairs, convert_to_numpy=True)
 
