@@ -74,7 +74,7 @@ Siga os passos abaixo para configurar e rodar o Guardião dos Direitos em seu am
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/paulonc/guardiao-dos-direitos.git](https://github.com/paulonc/guardiao-dos-direitos.git)
+    git clone https://github.com/paulonc/guardiao-dos-direitos.git
     cd guardiao-dos-direitos
     ```
 
