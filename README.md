@@ -28,7 +28,7 @@ O Guardião dos Direitos não é apenas mais um chatbot. É um sistema de **Gera
 O coração do Guardião é um grafo computacional gerenciado pelo **LangGraph**, que orquestra a colaboração entre diferentes agentes especializados.
 
 <div align="center">
-  <img src="docs/graph.png" alt="Arquitetura de Agentes do Guardião dos Direitos" width="800"/>
+  <img src="docs/graph.png" alt="Arquitetura de Agentes do Guardião dos Direitos" width="400"/>
 </div>
 
 
