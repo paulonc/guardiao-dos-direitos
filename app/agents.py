@@ -79,9 +79,14 @@ def query_transformer_agent(state):
     question = state["question"]
 
     prompt_template = """
-    Você é um especialista em reescrever perguntas para sistemas de busca. 
-    Gere 3 versões alternativas da pergunta do usuário para melhorar a recuperação de documentos. 
-    Retorne as 3 perguntas como uma lista de strings em formato JSON:
+    Você é um especialista em reescrever perguntas para otimizar sistemas de busca e recuperação de documentos. 
+    Dada a pergunta original de um usuário, gere 3 versões alternativas da pergunta que mantenham o mesmo sentido, 
+    mas que sejam mais amplas e diversas em termos de palavras-chave e estruturas, a fim de melhorar a abrangência e 
+    a eficácia de recuperação de informações no sistema de RAG (Retrieval-Augmented Generation). 
+    As novas perguntas devem ser relevantes para mais contextos e possíveis variações de consulta.
+
+    Retorne as 3 perguntas geradas em formato JSON, como uma lista de strings. O formato deve ser:
+
 
     Exemplo: {{"queries": ["pergunta 1", "pergunta 2", "pergunta 3"]}}
 
@@ -140,13 +145,14 @@ def answerer_agent(state: AgentState):
 
     prompt_template = """
     Você é um assistente especializado em Direito Previdenciário. 
-    Responda à pergunta do usuário com base EXCLUSIVAMENTE nos documentos fornecidos.
+    Sua tarefa é responder à pergunta do usuário com base EXCLUSIVAMENTE nas informações contidas nos documentos fornecidos.
+
 
     **Regras Estritas:**
     1. Cite suas fontes obrigatoriamente: use o formato (Fonte: nome_do_arquivo, Página: X).
     2. Se a informação não estiver nos documentos, responda EXATAMENTE: 
        "A informação solicitada não foi encontrada nos documentos disponíveis."
-    3. Não invente informações ou faça suposições.
+    3. **Não faça suposições, invente informações ou crie respostas fora do contexto dos documentos**.
     4. Seja claro, conciso e direto ao ponto.
 
     **Contexto (Documentos):**
