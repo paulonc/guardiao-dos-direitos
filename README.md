@@ -27,8 +27,23 @@ O Guardião dos Direitos não é apenas mais um chatbot. É um sistema de **Gera
 
 O coração do Guardião é um grafo computacional gerenciado pelo **LangGraph**, que orquestra a colaboração entre diferentes agentes especializados.
 
-**Fluxo de Agentes:**
-`Pergunta do Usuário` → `Agente Supervisor` → `[Pipeline RAG | Agente de Saudação | Agente Off-Topic]` → `Resposta Final`
+<div align="center">
+  <img src="docs/graph.png" alt="Arquitetura de Agentes do Guardião dos Direitos" width="800"/>
+</div>
+
+
+**Fluxo de Agentes Detalhado:**
+
+1.  **Agente Supervisor**: Atua como o roteador principal. Ele analisa a pergunta e a classifica em uma das categorias: `pergunta_sobre_previdencia`, `saudacao`, `meta_pergunta` ou `fora_de_topico`.
+2.  **Execução Condicional**:
+    -   Se for uma **saudação** ou **meta-pergunta**, agentes específicos fornecem respostas diretas e amigáveis.
+    -   Se for **fora de tópico**, um agente recusa educadamente a solicitação.
+    -   Se for sobre **Direito Previdenciário**, a pergunta entra no pipeline RAG principal.
+3.  **Pipeline RAG**:
+    -   **Query Transformer**: Expande a pergunta original em múltiplas variantes para uma busca mais abrangente.
+    -   **Retriever & Reranker**: Busca os documentos mais relevantes usando FAISS e os reordena com um Cross-Encoder para máxima precisão.
+    -   **Answerer**: O LLM (Gemini) gera uma resposta com base nos documentos reordenados, incluindo citações.
+    -   **Self-Check & Safety**: Agentes finais verificam a presença de fontes e adicionam um aviso legal antes de entregar a resposta final.
 
 **Pipeline de Recuperação Avançada:**
 `Consulta` → `Busca Vetorial (FAISS)` → `Top 20 Candidatos` → `Cross-Encoder Reranker` → `Top 5 Mais Relevantes` → `LLM (Gemini)`
@@ -59,7 +74,7 @@ Siga os passos abaixo para configurar e rodar o Guardião dos Direitos em seu am
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/seu-usuario/guardiao-dos-direitos.git](https://github.com/seu-usuario/guardiao-dos-direitos.git)
+    git clone [https://github.com/paulonc/guardiao-dos-direitos.git](https://github.com/paulonc/guardiao-dos-direitos.git)
     cd guardiao-dos-direitos
     ```
 
