@@ -147,17 +147,40 @@ Siga os passos abaixo para configurar e rodar o Guardião dos Direitos em seu am
 
 Um `Makefile` foi configurado para simplificar as tarefas comuns.
 
-| Comando         | Descrição                                                                         |
+| Comando         | Descrição                                                                           |
 | --------------- | ----------------------------------------------------------------------------------- |
 | `make setup`    | Cria um ambiente virtual `.venv` e instala todas as dependências do `requirements.txt`. |
 | `make install`  | Apenas instala as dependências no ambiente Python ativo.                            |
 | `make ingest`   | Executa o script de ingestão para processar os documentos e criar o índice FAISS.   |
 | `make run`      | Inicia a aplicação Streamlit no ambiente local.                                     |
 | `make build`    | Constrói a imagem Docker para a aplicação.                                          |
-| `make run-docker` | Executa a aplicação dentro de um container Docker.                                  |
+| `make run-docker` | Executa a aplicação dentro de um container Docker.                                |
 | `make stop`     | Para o container Docker em execução.                                                |
 | `make logs`     | Exibe os logs do container em tempo real.                                           |
 | `make clean`    | Remove arquivos de cache e o ambiente virtual local.                                |
+| `make evaluate` | Avalia o sistema RAG usando o CSV de teste e gera relatórios em JSON e Markdown.    |
+
+---
+
+## 📊 Avaliação de Desempenho
+
+Para garantir a qualidade e a confiabilidade das respostas, o **Guardião dos Direitos** foi submetido a uma avaliação rigorosa utilizando o framework **Ragas**. O benchmark foi realizado com um conjunto de **10 perguntas** complexas sobre regras de aposentadoria e benefícios, avaliando quatro métricas essenciais.
+
+| Métrica            | Média   | Status | Análise                                                                                 |
+| :----------------- | :-----: | :----: | :-------------------------------------------------------------------------------------- |
+| **Answer Relevancy** | `0.972` | 🟢   | As respostas estão **excelentemente alinhadas** com as perguntas dos usuários.          |
+| **Context Precision**| `0.876` | 🟢   | O sistema é **muito eficiente** em recuperar os contextos mais relevantes.             |
+| **Context Recall**   | `0.833` | 🟢   | O sistema consegue encontrar a **maioria dos contextos necessários** para uma resposta completa.|
+| **Faithfulness**     | `0.702` | 🟡   | As respostas melhoraram, mas o foco continua em **garantir a total aderência** aos fatos. |
+
+### Análise dos Resultados
+
+Os resultados demonstram uma **evolução positiva** no desempenho geral do sistema, com uma performance quase perfeita em **Answer Relevancy** (`0.972`) e uma melhoria notável em **Faithfulness** (`0.702`). O sistema de recuperação continua robusto, mantendo altas pontuações de precisão e recall.
+
+### Resultados detalhados
+
+Os resultados completos, incluindo métricas agregadas, respostas individuais e os contextos utilizados, estão disponíveis no relatório:  
+[📑 eval/ragas_report.md](eval/ragas_report.md)
 
 ---
 
