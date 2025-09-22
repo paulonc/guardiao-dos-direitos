@@ -35,3 +35,6 @@ stop:
 
 logs:
 	docker logs -f $(DOCKER_CONTAINER)
+
+evaluate:
+	python -m eval.evaluate

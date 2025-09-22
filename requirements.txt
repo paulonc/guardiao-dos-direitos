@@ -93,6 +93,7 @@ python-dotenv==1.0.1
 pytz==2025.2
 PyYAML==6.0.2
 ragas==0.1.9
+psutil==6.1.0
 referencing==0.36.2
 regex==2025.9.1
 requests==2.32.5
