@@ -1,5 +1,10 @@
 # Guardião dos Direitos ⚖️
 
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
+[![LangChain](https://img.shields.io/badge/LangChain-0.2+-green.svg)](https://langchain.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.31+-red.svg)](https://streamlit.io)
+
 <div align="center">
   <img src="docs/logo.png" alt="Guardião dos Direitos Logo" width="400"/>
 </div>
@@ -153,6 +158,19 @@ Um `Makefile` foi configurado para simplificar as tarefas comuns.
 | `make stop`     | Para o container Docker em execução.                                                |
 | `make logs`     | Exibe os logs do container em tempo real.                                           |
 | `make clean`    | Remove arquivos de cache e o ambiente virtual local.                                |
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 📚 Citação
+
+Se você utilizar o Guardião dos Direitos em pesquisas ou trabalhos, cite este projeto.  
+As informações de citação estão disponíveis no arquivo [`CITATION.cff`](./CITATION.cff) na raiz do repositório.
 
 ---
 
