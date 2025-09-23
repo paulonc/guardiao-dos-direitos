@@ -2,7 +2,7 @@
 > Gerado em: 2025-09-22T14:59:42.546922
 
 ## 📊 Métricas Agregadas
-Baseado em **10** questões**
+Baseado em **10** questões
 
 | Métrica | Média | Indicador |
 | :--- | :---: | :---: |
